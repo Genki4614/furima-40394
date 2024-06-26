@@ -17,8 +17,7 @@
 ## itemsレコード
 |Column                 |Type    | Options     |
 |-----------------------|--------|-------------|
-| item's name           | string | null: false |
-| image                 | text   | null: false |
+| item_name             | string | null: false |
 | category_id           | integer| null: false |
 | sale_status_id        | integer| null: false |
 | shipping_fee_status_id| integer| null: false |
@@ -36,7 +35,7 @@
 |---------------------|--------|-------------|
 | postal_code         | string | null: false |
 | prefecture_id       | integer| null: false |
-| city_id             | integer| null: false |
+| city                | string | null: false |
 | address             | string | null: false |
 | building            | string |
 | phone_number        | string | null: false |
@@ -51,7 +50,6 @@
 |---------------------|--------|-------------|
 | user                | references| foreign_key: true |
 | item                | references| foreign_key: true |
-| pay_form            | references| foreign_key: true |
 
 ### Association
 - belongs_to: user
