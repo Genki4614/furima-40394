@@ -55,13 +55,19 @@ RSpec.describe User, type: :model do
         @user.password = 'aaaaaa'
         @user.password_confirmation = 'aaaaaa'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is invalid")
+        expect(@user.errors.full_messages).to include('Password には半角英字と半角数字の両方を含めて設定してください')
       end
       it 'passwordが半角数字では登録できない' do
         @user.password = '111111'
         @user.password_confirmation = '111111'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is invalid")
+        expect(@user.errors.full_messages).to include("Password には半角英字と半角数字の両方を含めて設定してください")
+      end
+      it 'passwordが全角では登録できない' do
+        @user.password = 'ＡＢＣＤ１２３４'
+        @user.password_confirmation = '111111'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Password には半角英字と半角数字の両方を含めて設定してください"
       end
       it 'first_nameが空では登録できない' do
         @user.first_name = ''
@@ -83,6 +89,28 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include "Last name kana can't be blank"
       end
+
+      it 'first_nameに半角文字が含まれていると登録できない' do
+        @user.first_name = 'ﾖｼﾀﾞ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "First name 全角文字を使用してください"
+      end
+      it 'last_nameに半角文字が含まれていると登録できない' do
+        @user.last_name = 'ﾀﾛｳ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Last name 全角文字を使用してください"
+      end
+      it 'first_name_kanaにカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できない' do
+        @user.first_name_kana = '吉田'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "First name kana カタカナを使用してください"
+      end
+      it 'last_name_kanaにカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できない' do
+        @user.last_name_kana = '太郎'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Last name kana カタカナを使用してください"
+      end
+
       it 'birthdayが空では登録できない' do
         @user.birthday = ''
         @user.valid?
