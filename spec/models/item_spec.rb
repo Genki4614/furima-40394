@@ -61,17 +61,22 @@ RSpec.describe Item, type: :model do
     it '販売価格が300円未満' do
       @item.sell_price = 299
       @item.valid?
-      expect(@item.errors.full_messages).to include("Sell price must be greater than or equal to 300")
+      expect(@item.errors.full_messages).to include("Sell price is out of setting range")
     end
     it '販売価格が9,999,999円より大きい' do
       @item.sell_price = 10000000
       @item.valid?
-      expect(@item.errors.full_messages).to include("Sell price must be less than or equal to 9999999")
+      expect(@item.errors.full_messages).to include("Sell price is out of setting range")
     end
     it '販売価格が全角文字' do
       @item.sell_price = '１００００'
       @item.valid?
-      expect(@item.errors.full_messages).to include("Sell price is not a number")
+      expect(@item.errors.full_messages).to include("Sell price Half-width number")
+    end
+    it 'userが紐づいていない場合は登録できない' do
+    @item.user = nil
+    @item.valid?
+    expect(@item.errors.full_messages).to include("User must exist")
     end
    end
   end
