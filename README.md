@@ -40,13 +40,13 @@
 | address             | string | null: false |
 | building            | string |
 | phone_number        | string | null: false |
-| purchase_record     | references | null: false |foreign_key: true |
+|purchase_record→order| references | null: false |foreign_key: true |
 
 
 ### Association
-- belongs_to: purchase_record
+- belongs_to: purchase_record → order
 
-## purchase_records
+## purchase_records → orders
 |Column               |Type    | Options     |
 |---------------------|--------|-------------|
 | user                | references| foreign_key: true |
@@ -55,4 +55,4 @@
 ### Association
 - belongs_to: user
 - belongs_to: item
-- has_one : pay_form
+- has_one : pay_form 
