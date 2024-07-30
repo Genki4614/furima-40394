@@ -33,6 +33,11 @@ RSpec.describe RecordDelivery, type: :model do
         @record_delivery.valid?
         expect(@record_delivery.errors.full_messages).to include("Prefecture can't be blank")
       end
+      it '都道府県が---では保存できない' do
+        @record_delivery.prefecture_id = 0
+        @record_delivery.valid?
+        expect(@record_delivery.errors.full_messages).to include("Prefecture can't be blank")
+      end
       it '市区町村が空では保存できない' do
         @record_delivery.city = ''
         @record_delivery.valid?
@@ -57,6 +62,16 @@ RSpec.describe RecordDelivery, type: :model do
         @record_delivery.token = nil
         @record_delivery.valid?
         expect(@record_delivery.errors.full_messages).to include("Token can't be blank")
+      end
+      it '購入者が空だと購入できない' do
+        @record_delivery.user_id = nil
+        @record_delivery.valid?
+        expect(@record_delivery.errors.full_messages).to include("User can't be blank")
+      end
+      it '購入商品が空だと購入できない' do
+        @record_delivery.item_id = nil
+        @record_delivery.valid?
+        expect(@record_delivery.errors.full_messages).to include("Item can't be blank")
       end
     end
   end

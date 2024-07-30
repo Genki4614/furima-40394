@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
 
   def create
     @record_delivery = RecordDelivery.new(record_params)
-    @item = Item.find(params[:item_id])
     if @record_delivery.valid?
       @record_delivery.save
       redirect_to root_path
