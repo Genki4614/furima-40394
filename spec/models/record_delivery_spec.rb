@@ -48,8 +48,13 @@ RSpec.describe RecordDelivery, type: :model do
         @record_delivery.valid?
         expect(@record_delivery.errors.full_messages).to include("Phone number can't be blank")
       end
-      it '電話番号が10桁以上11桁以下以外では保存できない' do
+      it '電話番号が10桁未満では保存できない' do
         @record_delivery.phone_number = '080123412'
+        @record_delivery.valid?
+        expect(@record_delivery.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号が12桁以上では保存できない' do
+        @record_delivery.phone_number = '080123412333'
         @record_delivery.valid?
         expect(@record_delivery.errors.full_messages).to include('Phone number is invalid')
       end

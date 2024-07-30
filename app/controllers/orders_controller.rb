@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
   def index
     @record_delivery = RecordDelivery.new
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    @item = Item.find(params[:item_id])
   end
 
   def create
